@@ -3,44 +3,37 @@ const test = new TestClass();
 
 describe('Login Test', () => {
   
+ let bookTitle = 'Mindset: The New Psychology of Success'     //Change the book name and check testscenarios
 
-  before(() => {
-    cy.on('uncaught:exception', (err, runnable) => {
-      return false;
-
-    });
-    cy.visit('/');
+   beforeEach(() => {
+    
+    cy.visit('/');  // visited to https://www.goodreads.com/ 
     cy.wait(1000);
 
 
   });
 
-  it('should successfully log in with valid credentials', () => {
-    test.login();
-    test.searchAndClickBook();
-    test.addBookToMyBooks();
-    test.removeBookFromMyBooks();
-    test.verifyBookRemovedFromMyBooks();
-    test.signout()
+  it('Login to goodreads.com', () => {
+    // for login Used sign in with email method
+    let email = 'maningmore41@gmail.com'                   //change the email and password here to login another account
+    let password = 'Maning@1999'
+    test.login(email,password);
+    
   });
 
-  // it('should search and click on a book', () => {
-  //   test.searchAndClickBook();
-  // });
+  it('should Search for a specific book title And add it in my books', () => {
+    test.searchAndaddBookToMyBooks(bookTitle);
+  });
 
-  // it('should add a book to "My Books"', () => {
-  //   test.addBookToMyBooks();
-  // });
+  it('should  Remove the selected book from my book list.', () => {
+    test.removeBookFromMyBooks(bookTitle);
+  });
 
-  // it('should remove a book from "My Books"', () => {
-  //   test.removeBookFromMyBooks();
-  // });
+  it('should verify that the book is removed from "My Books"', () => {
+    test.verifyBookRemovedFromMyBooks(bookTitle);
+  });
 
-  // it('should verify that the book is removed from "My Books"', () => {
-  //   test.verifyBookRemovedFromMyBooks();
-  // });
-
-  // it('should signout',() => {
-  // test.signout()
-  // })
+  it('should Logout',() => {
+  test.signout()
+  });
 });

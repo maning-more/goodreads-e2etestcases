@@ -7,7 +7,8 @@ module.exports = {
     ],
     
     "chromeWebSecurity": false,
-    autoOpen: false
+    autoOpen: false,
+    testIsolation: false,
 
   }
 };

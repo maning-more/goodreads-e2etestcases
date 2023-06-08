@@ -1,36 +1,38 @@
 
 function TestClass() {
-  function login() {
+  function login(email,password) {
+    cy.on('uncaught:exception', (err, runnable) => {
+      // Return false to prevent Cypress from failing the test
+      return false;
+    });
     cy.get('.authSwitchFlow')
       .contains('Sign In')
       .click();
     cy.wait(1000);
     cy.get('.gr-button--auth').eq(3).click();
-    cy.get('#ap_email').type('maningmore41@gmail.com')
-    cy.get('#ap_password').type('Maning@1999')
+    cy.get('#ap_email').type(email)
+    cy.get('#ap_password').type(password)
     cy.get('#signInSubmit').click();
-    cy.wait(3000);
+    cy.wait(1000);
   }
 
-  function searchAndClickBook() {
-    cy.get('.searchBox__input').eq(0).type('Mindset: The New Psychology of Success');
+  function searchAndaddBookToMyBooks(bookTitle) {
+    cy.get('.searchBox__input').eq(0).type(bookTitle);
     cy.get('.searchBox__icon--magnifyingGlass').eq(0).click();
     cy.get('tr[itemscope][itemtype="http://schema.org/Book"]')
-      .contains('Mindset: The New Psychology of Success')
+      .contains(bookTitle)
       .click();
-    cy.wait(2000);
-  }
-
-  function addBookToMyBooks() {
+    cy.wait(1000);
     cy.get('.Button--medium').eq(0).click();
     cy.wait(10000);
   }
 
-  function removeBookFromMyBooks() {
+  function removeBookFromMyBooks(bookTitle) {
     cy.scrollTo('top');
-    cy.get('.HeaderPrimaryNav__list > :nth-child(2) > a').click();
     cy.wait(2000);
-    cy.get('#sitesearch_field').type('Mindset: The New Psychology of Success');
+      cy.get('.HeaderPrimaryNav__list > :nth-child(2) > a').click()
+    cy.wait(2000);
+    cy.get('#sitesearch_field').type(bookTitle);
     cy.get('.myBooksSearchButton > img').click();
     cy.get('.title > .value > a').click();
     cy.wait(2000);
@@ -41,14 +43,14 @@ function TestClass() {
     cy.get('button.Button.Button--primary.Button--small.Button--block')
       .contains('Remove')
       .click();
-    cy.wait(2000);
+    cy.wait(10000);
   }
 
-  function verifyBookRemovedFromMyBooks() {
+  function verifyBookRemovedFromMyBooks(bookTitle) {
     cy.scrollTo('top');
     cy.get('.HeaderPrimaryNav__list > :nth-child(2) > a').click();
     cy.wait(2000);
-    cy.get('#sitesearch_field').type('Mindset: The New Psychology of Success');
+    cy.get('#sitesearch_field').type(bookTitle);
     cy.get('.myBooksSearchButton > img').click();
     cy.get('.nocontent').should('exist');
   }
@@ -63,8 +65,7 @@ function TestClass() {
 
   return {
     login: login,
-    searchAndClickBook: searchAndClickBook,
-    addBookToMyBooks: addBookToMyBooks,
+    searchAndaddBookToMyBooks: searchAndaddBookToMyBooks,
     removeBookFromMyBooks: removeBookFromMyBooks,
     verifyBookRemovedFromMyBooks: verifyBookRemovedFromMyBooks,
     signout:signout
