@@ -1,1 +1,1 @@
-#This project only built to show how  test files can structure and to how we can write functions to reusable testcases that will help to save the time
+This project is specifically designed to showcase how test files can be structured and how we can write reusable test cases, ultimately saving time. Utilizing these files and test cases, you can begin writing new test cases, create a new branch, and proceed with writing, committing, and raising a pull request.
